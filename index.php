@@ -45,7 +45,7 @@ if (!isset($_SESSION['loggedin'])) {
         <option value="iscritti_per_corso">Iscritti per Corso</option>
         <option value="report_corsi">Report Corsi</option>
     </select>
-    <button type="submit">Vai</button>
+    <button type="submit">Seleziona</button>
 </form>
 
 <hr>
@@ -78,18 +78,55 @@ if (isset($_GET['funzione'])) {
                     ?>
                 </select>
 
+                Orario preferito:
+                <input type="time" name="orario" required>
+
                 <button type="submit" name="addIscritto">Inserisci</button>
             </form>
             <?php
             if (isset($_POST['addIscritto'])) {
-                inserisciIscritto($conn, $_POST['corso'], $_POST['membro']);
+                $corso = $_POST['corso'];
+                $membro = $_POST['membro'];
+                $orario = $_POST['orario'];
+                inserisciIscritto($conn, $corso, $membro, $orario);
             }
             break;
-        
-        default:
-            echo "Funzionalità non valida!";
+
+        case 'corso_piu_iscritti':
+            ?>
+            <h2>Corso con più iscritti</h2>
+            <?php
+            $corsi = corsoConPiuIscritti($conn);
+            while ($c = $corsi->fetch_assoc()) {
+                echo "{$c['nome']} {$c['cognome']} - {$c['nome_corso']} ({$c['iscritti']} iscritti)<br>";
+            }
             break;
-    }
+
+        case 'iscritti_per_corso':
+            ?>
+            <h2>Iscritti per Corso</h2>
+            <form method="get">
+                Corso:
+                <select name="corso" required>
+                    <?php
+                    $corsi = $conn->query("SELECT id_corso, nome_corso FROM Corsi");
+                    while ($c = $corsi->fetch_assoc()) {
+                        echo "<option value='{$c['id_corso']}'>{$c['nome_corso']}</option>";
+                    }
+                    ?>
+                </select>
+                <input type="hidden" name="funzione" value="iscritti_per_corso">
+                <button type="submit">Visualizza</button>
+            </form>
+            <?php
+            if (isset($_GET['corso'])) {
+                $iscritti = iscrittiPerCorso($conn, $_GET['corso']);
+                while ($i = $iscritti->fetch_assoc()) {
+                    echo "{$i['nome']} {$i['cognome']}<br>";
+                }
+            }
+            break;
+        }
 }
 ?>
 
