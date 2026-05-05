@@ -17,17 +17,5 @@ function inserisciIscritto($conn, $corso, $membro) {
     }
 }
 
-function corsoConPiuIscritti($conn) {
-    $query = "
-        SELECT i.nome, i.cognome, c.nome_corso, COUNT(ic.id_iscrizione) AS iscritti
-        FROM Istruttori i
-        JOIN Corsi c ON i.id_istruttore = c.id_istruttore
-        JOIN Iscrizioni_Corsi ic ON c.id_corso = ic.id_corso
-        GROUP BY c.id_corso
-        HAVING iscritti >= 5
-        ORDER BY iscritti DESC";
-    return $conn->query($query);
-}
-
 
 ?>
