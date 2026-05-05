@@ -1,0 +1,94 @@
+/* stile generale */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* contenitore principale */
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+/* titoli */
+h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* moduli */
+form {
+    margin-bottom: 15px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="time"],
+form select,
+form button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+form button {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #bbb;
+}
+
+/* tabelle */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+table th,
+table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #eee;
+    color: #333;
+}
+
+/* link */
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* messaggi di errore */
+.error {
+    color: #a00;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* messaggi di successo */
+.success {
+    color: #0a0;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
