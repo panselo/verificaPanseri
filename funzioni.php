@@ -1,7 +1,7 @@
 <?php
 
 function verificaAccesso($nomeutente, $password) {
-    // Verifica che il nome utente sia "panseri" e la password sia "verifica"
+    // verifica che il nome utente sia "panseri" e la password sia "verifica"
     return $nomeutente === "panseri" && $password === "verifica";
 }
 
@@ -10,9 +10,9 @@ function inserisciIscritto($conn, $corso, $membro, $orario) {
     $query = "INSERT INTO Iscrizioni_Corsi (id_corso, id_membro, data_iscrizione, orario_preferito)
               VALUES ($corso, $membro, '$data', '$orario')";
     if ($conn->query($query)) {
-        echo "Iscritto aggiunto con successo!";
+        echo "<p class='success'>Iscritto aggiunto con successo!</p>";
     } else {
-        echo "Errore: " . $conn->error;
+        echo "<p class='error'>Errore: " . $conn->error . "</p>";
     }
 }
 
@@ -35,6 +35,17 @@ function iscrittiPerCorso($conn, $corso) {
         JOIN Iscrizioni_Corsi ic ON m.id_membro = ic.id_membro
         WHERE ic.id_corso = $corso
         ORDER BY m.cognome, m.nome";
+    return $conn->query($query);
+}
+
+function reportCorsi($conn) {
+    $query = "
+        SELECT i.nome AS nome_istruttore, i.cognome AS cognome_istruttore, c.nome_corso, m.nome, m.cognome
+        FROM Istruttori i
+        JOIN Corsi c ON i.id_istruttore = c.id_istruttore
+        LEFT JOIN Iscrizioni_Corsi ic ON c.id_corso = ic.id_corso
+        LEFT JOIN Membri m ON ic.id_membro = m.id_membro
+        ORDER BY i.cognome, i.nome, c.nome_corso, m.cognome, m.nome";
     return $conn->query($query);
 }
 
